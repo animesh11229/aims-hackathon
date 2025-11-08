@@ -1,4 +1,4 @@
-├── NSUT
+├── DTU
     ├── cad_or_engneeringDrawing
         ├── semester-1
             ├── $$USER-NOTES$$by-nishka_cad_lecture-3_2025-08-13_conic-section.pdf
@@ -26,7 +26,7 @@
                 ├── $$USER-BOOK$$:Smithsonian Mathematical Tables_ Hyperbolic Functions by Anna’s Archive.pdf
                 ├── $$USER-BOOK$$:hyperbolic_functions_by_james_mcMahon.pdf
     ├── about_clg
-        ├── $$SYSTEM$$Comprehensive Campus and navigation Guide NSUT.pdf
+        ├── $$SYSTEM$$https://dtu.ac.in/
     ├── maths
         ├── semester-1
             ├── $$USER-NOTES$$by-indrina_maths_lecture-4_2025-08-12_successive-differentiation.pdf
@@ -39,14 +39,7 @@
             ├── $$USER-NOTES$$by-deshna-jain_maths_lecture-4_2025-08-12_successive-differentiation.pdf
             ├── $$USER-NOTES$$:by-deshna-jain_maths-notes_lecture-3_2025-08-08_more-questions-and-some-special-formulas-of-inverse-hyperbolic-function.pdf
             ├── $$SYSTEM$$Syllabus.pdf
-    ├── english
-        ├── semester-1
-            ├── $$USER-NOTES$$by-unknown_English_general_2025-08-(04-20)_Oxford-Collocations-Dictionary.pdf
-            ├── $$USER-NOTES$$by-unknown_Reference-Material_General_2025-08-(04-20)_Abbreviations-List.pdf
-            ├── $$USER-NOTES$$by-unknown_Language-Study_General_2025-08-(04-20)_Foreign-Words-and-Phrases-List.pdf
-            ├── $$USER-NOTES$$by-unknown_english_general_2025-08-(11-30)_exercises
-            ├── $$SYSTEM$$FCHS 0105 ENGLISH SYLLABUS (3)-1-.pdf
-            ├── $$SYSTEM$$FCHS 0105 ENGLISH SYLLABUS.docx
+    
     ├── electrical engneering
         ├── semester-1
             ├── $$USER-NOTES$$by-unknown_electrical-engineering_2025-08-(06-11)_unit one basic definitions and errors.pdf
