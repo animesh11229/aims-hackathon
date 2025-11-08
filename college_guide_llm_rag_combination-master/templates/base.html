@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This tag ensures the layout adapts correctly to mobile screen sizes -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts for the 'send' icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0" />
+    <link rel="stylesheet" href="static/style.css" />
+
+</head>
+<body>
+
+    <!--
+      * =========================================
+      * HTML STRUCTURE
+      * =========================================
+    -->
+    <div class="chat-container">
+
+        <!-- Header -->
+        <header class="chat-header">
+            <h1>Help Me Bro 😭</h1>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-messages" id="chat-messages">
+            <!-- Example messages to show the design -->
+            <div class="message bot-message">
+                <p>Hello! How can I help you today?</p>
+            </div>
+            <div class="message user-message">
+                <p>Tell me a little about this interface.</p>
+            </div>
+             <div class="message bot-message">
+                <p>Certainly! This is a minimalist, mobile-first chat UI designed with a dark theme. The layout is fully responsive and built with modern CSS Flexbox for alignment and spacing.</p>
+            </div>
+            <!-- Add more messages here to test scrolling -->
+            <div class="message user-message"><p>This looks great.</p></div>
+            <div class="message bot-message"><p>Thank you! I've locked the header and footer so only this message area scrolls.</p></div>
+            <div class="message user-message"><p>Perfect, that's exactly what I wanted.</p></div>
+            <div class="message bot-message"><p>Is there anything else I can help you with?</p></div>
+            <div class="message user-message"><p>No, that's all for now.</p></div>
+            <div class="message bot-message"><p>Alright, have a great day!</p></div>
+        </main>
+
+        <!-- Input Form -->
+        <footer class="chat-input-form">
+            <input type="text" id="userInput" placeholder="Type a message..." autocomplete="off">
+            <button type="submit" id="send-btn">
+                <span class="material-symbols-outlined">send</span>
+            </button>
+        </footer>
+    </div>
+
+</body>
+</html>

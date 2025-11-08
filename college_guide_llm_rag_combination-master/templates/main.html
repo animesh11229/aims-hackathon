@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This tag ensures the layout adapts correctly to mobile screen sizes -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!-- Google Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts for the 'send' icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0" />
+    <link rel="stylesheet" href="static/style.css" />
+    <!-- Add this in your <head> section -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+</head>
+<body>
+
+    <!--
+      * =========================================
+      * HTML STRUCTURE
+      * =========================================
+    -->
+    <div class="chat-container">
+
+        <!-- Header -->
+        <header class="chat-header">
+            <h1>Help Me Bro 😭</h1>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-messages" id="chat-messages">
+            <!-- Initial bot message -->
+            <div class="message bot-message">
+                <p>This service is made by Avik Yadav, show your support by following our instagram handle <a href="https://www.instagram.com/another_indie_dev/profilecard/?igsh=enZzYjJsNGl3N3Bn">@another_indie_dev</a>
+                    how can I assist you today?
+                </p>
+            </div>
+
+            <!-- "Thinking" indicator, hidden by default -->
+            <div class="message bot-message" id="thinking-indicator" style="display: none;">
+                <p id="thinking-text"></p>
+            </div>
+        </main>
+
+        <!-- Input Form -->
+        <footer class="chat-input-form" id="chat-form">
+            <input type="text" id="userInput" placeholder="Type a message..." autocomplete="off">
+            <button type="submit" id="send-btn">
+                <span class="material-symbols-outlined">send</span>
+            </button>
+        </footer>
+    </div>
+
+    <!--
+      * =========================================
+      * JAVASCRIPT LOGIC
+      * =========================================
+    -->
+    <script>
+        let baseUrl = window.location.origin + window.location.pathname;
+        let newUrl = baseUrl.replace(/\/$/, "") + "/api";
+        document.addEventListener('DOMContentLoaded', () => {
+    // Get references to all the necessary HTML elements
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('send-btn');
+    const thinkingIndicator = document.getElementById('thinking-indicator');
+    const thinkingText = document.getElementById('thinking-text');
+
+    // Your list of thinking texts (no changes here)
+    const thinkingTexts = [
+        "Generating response...", "Checking RAG database...", "Fetching latest data...",
+        "Thinking really hard...", "Piecing it all together...", "Pulling answers from the void...",
+        "Consulting the archives...", "Polishing the details...", "Summoning relevant facts...",
+        "Checking with the brain trust...", "Cross-referencing sources...", "Applying final touches...",
+        "Making sure it sounds smart...", "Dusting off the answer...", "Shaping the perfect reply...",
+        "Running last-second checks...", "Packing your response for delivery...",
+        "Pouring thoughts into words...", "Scanning for any typos...", "Aligning the stars for the answer...",
+        "Warming up the neurons...", "Verifying the final output..."
+    ];
+
+    let thinkingInterval;
+
+    const addMessage = (text, sender) => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', `${sender}-message`);
+        const p = document.createElement('p');
+
+        if (sender === 'bot') {
+            // Using a trusted library like 'marked' is good for rendering Markdown
+            p.innerHTML = marked.parse(text);
+        } else {
+            p.textContent = text;
+        }
+
+        messageElement.appendChild(p);
+        chatMessages.insertBefore(messageElement, thinkingIndicator);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    const startThinking = () => {
+        let textIndex = 0;
+        thinkingIndicator.style.display = 'block';
+        thinkingText.textContent = thinkingTexts[textIndex];
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        thinkingInterval = setInterval(() => {
+            textIndex = (textIndex + 1) % thinkingTexts.length;
+            thinkingText.textContent = thinkingTexts[textIndex];
+        }, 2000);
+    };
+
+    const stopThinking = () => {
+        clearInterval(thinkingInterval);
+        thinkingIndicator.style.display = 'none';
+    };
+
+    /**
+     * The core function to handle sending a message.
+     */
+    const handleSendMessage = async () => {
+        const userText = userInput.value.trim();
+        if (!userText) return;
+
+        addMessage(userText, 'user');
+        userInput.value = '';
+
+        // --- CORRECTION 1: Disable input to prevent double-sending ---
+        userInput.disabled = true;
+        sendBtn.disabled = true;
+
+        startThinking();
+
+        try {
+            const response = await fetch(newUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userText }),
+            });
+
+            if (!response.ok) {
+                // Throw an error to be caught by the catch block
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            addMessage(data.response, 'bot');
+
+        } catch (error) {
+            console.error("Error fetching bot response:", error);
+            addMessage("Sorry, I'm having trouble connecting right now. Please try again in a moment.", 'bot');
+        } finally {
+            // --- CORRECTION 2: Always re-enable input and stop thinking ---
+            // The 'finally' block runs whether the 'try' succeeded or failed.
+            stopThinking();
+            userInput.disabled = false;
+            sendBtn.disabled = false;
+            userInput.focus(); // Set focus back to the input field for the user
+        }
+    };
+
+    // Event listener for the send button
+    sendBtn.addEventListener('click', handleSendMessage);
+
+    // Event listener for the 'Enter' key in the input field
+    userInput.addEventListener('keydown', (e) => {
+        // Only send if the input is not disabled
+        if (e.key === 'Enter' && !userInput.disabled) {
+            e.preventDefault();
+            handleSendMessage();
+        }
+    });
+});
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+/* * =========================================
+ * NEW MODERN CSS STYLES
+ * =========================================
+ */
+
+/* New "classy" color palette with vibrant gradients */
+:root {
+    --background-color: #0A0A0A; /* Deep, rich black */
+    --surface-color: #141414; /* Dark grey for the main container */
+    --primary-text-color: #F0F0F0; /* Soft, off-white for readability */
+    --bot-message-bg: #282828; /* Cool, dark grey for bot messages */
+    --user-gradient: linear-gradient(135deg, #DA4453, #89216B); /* Classy pink/purple gradient */
+    --accent-color: #DA4453; /* Accent from the gradient */
+}
+
+/* Basic reset for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    /* FIX: Prevents the entire page from scrolling */
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+    display: flex;
+    justify-content: center;
+}
+
+/* Main container for the chat interface */
+.chat-container {
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface-color);
+}
+
+/* Header section - more understated */
+.chat-header {
+    padding: 1rem;
+    text-align: center;
+    flex-shrink: 0; /* Prevents header from shrinking */
+    border-bottom: 1px solid #222;
+}
+
+.chat-header h1 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #aaa;
+}
+
+/* Main area where messages are displayed */
+.chat-messages {
+    flex-grow: 1; /* Allows this area to fill the available space */
+    padding: 1.5rem 1rem;
+    overflow-y: auto; /* Enables vertical scrolling ONLY for this element */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Animation for new messages */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styling for individual message bubbles */
+.message {
+    max-width: 80%;
+    padding: 0.85rem 1.2rem;
+    border-radius: 20px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.message p {
+    margin: 0;
+}
+
+.bot-message {
+    background-color: var(--bot-message-bg);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    overflow-wrap: break-word;
+}
+
+.user-message {
+    background: var(--user-gradient);
+    color: #FFFFFF;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+/* The footer area containing the text input and send button */
+.chat-input-form {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #222;
+    flex-shrink: 0; /* Prevents input form from shrinking */
+}
+
+#userInput {
+    flex-grow: 1;
+    border: none;
+    background-color: #252525;
+    color: var(--primary-text-color);
+    padding: 0.9rem;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+#userInput::placeholder {
+    color: #777;
+}
+
+#userInput:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+#send-btn {
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    margin-left: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#send-btn:hover {
+    transform: scale(1.1);
+}
+
+#send-btn:active {
+    transform: scale(1.0);
+}
+
+#send-btn .material-symbols-outlined {
+    font-size: 24px;
+}
+
+/*
+ * =========================================
+ * LINK STYLES
+ * =========================================
+ */
+
+.chat-messages a {
+    /* Use the vibrant accent color for high visibility */
+    color: var(--accent-color);
+
+    /* Remove the default underline for a cleaner look */
+    text-decoration: none;
+
+    /* Give links a slightly bolder weight to stand out */
+    font-weight: 500;
+
+    /* Add a smooth transition for the hover effect */
+    transition: color 0.2s ease;
+}
+
+.chat-messages a:hover {
+    /* Add an underline on hover to signify it's a clickable link */
+    text-decoration: underline;
+
+    /* Add a little space between the text and the underline */
+    text-underline-offset: 3px;
+}
+
+.chat-messages a:visited {
+    /* Use the purple from your gradient for visited links */
+    /* This provides clear user feedback and stays within the theme */
+    color: #89216B;
+}
